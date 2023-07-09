@@ -62,6 +62,8 @@ function tt_set_lastsent($id) {
 
 	$json_list = curl_exec($cURLConnection);
 	curl_close($cURLConnection);
+	
+	return;
 }
 
 function tt_generate_mail($id, $name, $gender, $dob) {

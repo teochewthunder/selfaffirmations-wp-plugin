@@ -99,7 +99,7 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 	$about .= " named '" . $name . "'";
 	$about .= " born on " . explode("T", $dob)[0];
 
-	$prompt_type = rand(0, 5);
+	$prompt_type = rand(0, 8);
 	$prompt = "";
 	$tokens = 50;
 	$title = "";
@@ -110,7 +110,8 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 		case 2: $prompt = "Generate some positive life advice for"; $title = "Some life advice"; $tokens = 1000; break;
 		case 3: $prompt = "Generate a sample horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
 		case 4: $prompt = "Generate an encouraging two paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 2000; break;
-		default: $prompt = "Generate an encouraging one paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 1000; break;
+		case 5: $prompt = "Generate an encouraging one paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 1000; break;
+		default: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));
@@ -119,44 +120,44 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 	$final_prompt = $prompt . " " . $about . ". " . $interests . $descriptions;
 		
 	//api call
-	$key = "xxx";
+	$key = "sk-xxx";
 	
-	$url = 'https://api.openai.com/v1/chat/completions';  
-	
-	$headers = array(
-	"Authorization: Bearer {$key}",
-	"OpenAI-Organization: org-FUOhDblZb1pxvaY6YylF54gl", 
-	"Content-Type: application/json"
-	);
-	
-	// Define messages
-	$messages = [];
+    $url = 'https://api.openai.com/v1/chat/completions';  
+    
+    $headers = array(
+        "Authorization: Bearer {$key}",
+        "OpenAI-Organization: org-FUOhDblZb1pxvaY6YylF54gl", 
+        "Content-Type: application/json"
+    );
+    
+    // Define messages
+    $messages = [];
 	$obj = [];
-	$obj["role"] = "user";
-	$obj["content"] = $final_prompt;
+    $obj["role"] = "user";
+    $obj["content"] = $final_prompt;
 	$messages[] = $obj;
+    	
+    // Define data
+    $data = array();
+    $data["model"] = "gpt-3.5-turbo";
+    $data["messages"] = $messages;
+    $data["max_tokens"] = $tokens;
 
-	// Define data
-	$data = array();
-	$data["model"] = "gpt-3.5-turbo";
-	$data["messages"] = $messages;
-	$data["max_tokens"] = $tokens;
-	
-	// init curl
-	$curl = curl_init($url);
-	curl_setopt($curl, CURLOPT_POST, 1);
-	curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-	
+    // init curl
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
 	$result = curl_exec($curl);
-	if (curl_errno($curl)) {
-	echo 'Error:' . curl_error($curl);
-	} else {
-	echo print_r($result);
-	}
-	
-	curl_close($curl);	
+    if (curl_errno($curl)) {
+        echo 'Error:' . curl_error($curl);
+    } else {
+        echo print_r($result);
+    }
+    
+    curl_close($curl);	
 	
 	$result = json_decode($result);
 	return ["title" => $title, "body" => $result->choices[0]->message->content];
@@ -169,7 +170,7 @@ function tt_selfaffirmations() {
 		$name = $l->first_name . " " . $l->last_name;
 		$email = tt_generate_mail($l->email, $name, $l->gender, $l->dob);
 
-		if (wp_mail($l->email, $email["title"], $email["body"], "", [] )) {
+		if (wp_mail($l->email, $email["title"], $email["body"] . "\n\nTo unsubscribe to the Self-affirmations Mailing List, please reply to this email with the subject 'UNSUBSCRIBE'.", "", [] )) {
 			tt_set_lastsent($l->email);
 		}
 	}

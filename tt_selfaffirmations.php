@@ -99,7 +99,7 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 	$about .= " named '" . $name . "'";
 	$about .= " born on " . explode("T", $dob)[0];
 
-	$prompt_type = rand(0, 8);
+	$prompt_type = rand(0, 15);
 	$prompt = "";
 	$tokens = 50;
 	$title = "";
@@ -111,7 +111,10 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 		case 3: $prompt = "Generate a sample horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
 		case 4: $prompt = "Generate an encouraging two paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 2000; break;
 		case 5: $prompt = "Generate an encouraging one paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 1000; break;
-		default: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
+		case 6: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
+		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 5000; break;
+		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 5000; break;
+		default: $prompt = "Generate five fictitious short reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 5000; break;	
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));

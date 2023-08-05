@@ -114,7 +114,7 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 		case 6: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
 		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 5000; break;
 		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 5000; break;
-		default: $prompt = "Generate five fictitious short reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 5000; break;	
+		default: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 5000; break;	
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));

@@ -66,7 +66,7 @@ function tt_set_lastsent($id) {
 	return;
 }
 
-function tt_generate_mail($id, $name, $gender, $dob) {
+function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender = "M", $dob = "01-01-1980") {
 	$terms = tt_get_terms($id);
 
 	$interests = "";
@@ -112,9 +112,10 @@ function tt_generate_mail($id, $name, $gender, $dob) {
 		case 4: $prompt = "Generate an encouraging two paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 2000; break;
 		case 5: $prompt = "Generate an encouraging one paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 1000; break;
 		case 6: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
-		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 5000; break;
-		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 5000; break;
-		default: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 5000; break;	
+		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 2500; break;
+		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 2500; break;
+		case 9: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 2500; break;	
+		default: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races complimenting the personality of"; $title = "Public Opinion About You"; $tokens = 2500; break;	
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));
@@ -163,7 +164,9 @@ function tt_generate_mail($id, $name, $gender, $dob) {
     curl_close($curl);	
 	
 	$result = json_decode($result);
-	return ["title" => $title, "body" => $result->choices[0]->message->content];
+	$sanitized_content = $result->choices[0]->message->content;
+	$sanitized_content = str_replace('"', '\"', $sanitized_content);
+	return ["title" => $title, "body" => $sanitized_content];
 }
 
 function tt_selfaffirmations() {

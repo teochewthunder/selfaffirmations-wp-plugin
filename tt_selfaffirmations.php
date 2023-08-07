@@ -114,7 +114,8 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 		case 6: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
 		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 2500; break;
 		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 2500; break;
-		case 9: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 2500; break;	
+		case 9: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 2500; break;
+		case 10: $prompt = "Generate five corny pickup lines from random people for"; $title = "Pickup Lines For You"; $tokens = 2500; break;
 		default: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races complimenting the personality of"; $title = "Public Opinion About You"; $tokens = 2500; break;	
 	}
 	
@@ -165,7 +166,7 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 	
 	$result = json_decode($result);
 	$sanitized_content = $result->choices[0]->message->content;
-	$sanitized_content = str_replace('"', '\"', $sanitized_content);
+	//$sanitized_content = str_replace('"', '\"', $sanitized_content);
 	return ["title" => $title, "body" => $sanitized_content];
 }
 

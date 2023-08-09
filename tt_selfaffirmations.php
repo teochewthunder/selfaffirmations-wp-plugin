@@ -166,7 +166,7 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 	
 	$result = json_decode($result);
 	$sanitized_content = $result->choices[0]->message->content;
-	//$sanitized_content = str_replace('"', '\"', $sanitized_content);
+	$sanitized_content = str_replace('[Your Name]', $name, $sanitized_content);
 	return ["title" => $title, "body" => $sanitized_content];
 }
 

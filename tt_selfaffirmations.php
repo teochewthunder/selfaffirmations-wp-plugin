@@ -118,7 +118,8 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 		case 10: $prompt = "Generate five corny pickup lines from random people for"; $title = "Pickup Lines For You"; $tokens = 2500; break;
 		case 11: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races complimenting the personality of"; $title = "Public Opinion About You"; $tokens = 2500; break;	
 		case 12: $prompt = "Create a short movie synopsis with famous actors about"; $title = "A movie was made about you..."; $tokens = 3000; break;
-		default: $prompt = "Generate a character testimonial (from self) for"; $title = "Your testimonial!"; $tokens = 3000; break;
+		case 13: $prompt = "Generate a character testimonial (from self) for"; $title = "Your testimonial!"; $tokens = 3000; break;
+		default: $prompt = "Write a love letter (from self) to"; $title = "Some self-love"; $tokens = 3000; break;			
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));

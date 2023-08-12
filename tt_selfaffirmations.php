@@ -99,27 +99,30 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 	$about .= " named '" . $name . "'";
 	$about .= " born on " . explode("T", $dob)[0];
 
-	$prompt_type = rand(0, 15);
+	$prompt_type = rand(0, 20);
 	$prompt = "";
 	$tokens = 50;
 	$title = "";
 	
 	switch($prompt_type){
-		case 0: $prompt = "Generate an encouraging three paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 3000; break;
-		case 1: $prompt = "Generate a complimentary poem about"; $title = "A poem for you!"; $tokens = 3000; break;
-		case 2: $prompt = "Generate some positive life advice for"; $title = "Some life advice"; $tokens = 1000; break;
-		case 3: $prompt = "Generate a sample horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
+		case 0: $prompt = "Generate a complimentary poem about"; $title = "A poem for you!"; $tokens = 3000; break;
+		case 1: $prompt = "Generate some positive life advice for"; $title = "Some life advice"; $tokens = 1000; break;
+		case 2: $prompt = "Generate a sample horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
+		case 3: $prompt = "Generate a Chinese zodiac horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
 		case 4: $prompt = "Generate an encouraging two paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 2000; break;
 		case 5: $prompt = "Generate an encouraging one paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 1000; break;
-		case 6: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
-		case 7: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 2500; break;
-		case 8: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 2500; break;
-		case 9: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 2500; break;
-		case 10: $prompt = "Generate five corny pickup lines from random people for"; $title = "Pickup Lines For You"; $tokens = 2500; break;
-		case 11: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races complimenting the personality of"; $title = "Public Opinion About You"; $tokens = 2500; break;	
-		case 12: $prompt = "Create a short movie synopsis with famous actors about"; $title = "A movie was made about you..."; $tokens = 3000; break;
+		case 6: $prompt = "Generate an encouraging three paragraph letter to self for"; $title = "Your self-affirmation"; $tokens = 3000; break;			
+		case 7: $prompt = "Generate a funny and uplifting short story about"; $title = "The Story of You"; $tokens = 3000; break;
+		case 8: $prompt = "Generate five inspirational quotes from famous people for"; $title = "Five Quotes to make your day"; $tokens = 2500; break;
+		case 9: $prompt = "Generate five fictitious short reviews from fictitious publications about"; $title = "Your reviews from public media"; $tokens = 2500; break;
+		case 10: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races and their occupations about"; $title = "Public Opinion About You"; $tokens = 2500; break;
+		case 11: $prompt = "Generate five fictitious one-sentence reviews from fictitious people from diverse races complimenting the personality of"; $title = "Public Opinion About You"; $tokens = 2500; break;				
+		case 12: $prompt = "Generate five corny pickup lines from random people for"; $title = "Pickup Lines For You"; $tokens = 2500; break;
 		case 13: $prompt = "Generate a character testimonial (from self) for"; $title = "Your testimonial!"; $tokens = 3000; break;
-		default: $prompt = "Write a love letter (from self) to"; $title = "Some self-love"; $tokens = 3000; break;			
+		case 14: $prompt = "Write a love letter (from self) to"; $title = "Some self-love"; $tokens = 3000; break;
+		case 15: $prompt = "Create a short movie synopsis with famous actors about"; $title = "A movie was made about you!"; $tokens = 3000; break;			
+		case 16: $prompt = "Create a movie role, with famous co-stars, for"; $title = "A movie role for you"; $tokens = 3000; break;			
+		default: $prompt = "Write a welcoming letter from the President of a Fan Club centered around"; $title = "Welcome Address From " . $name . " Fan Club"; $tokens = 3000; break;			
 	}
 	
 	$tokens+= (100 * count($terms["interests"]));

@@ -123,7 +123,7 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 		case 15: $prompt = "Create a short movie synopsis with famous actors about"; $title = "A movie was made about you!"; $tokens = 3000; break;			
 		case 16: $prompt = "Create a movie role, with famous co-stars, for"; $title = "A movie role for you"; $tokens = 3000; break;			
 		case 17: $prompt = "Write a welcoming letter from the President of a Fan Club centered around"; $title = "Welcome Address From " . $name . " Fan Club"; $tokens = 1000; break;
-		default: $prompt = "Generate a sensational and funny article from a fictitious publication about"; $title = "An article About You" . $name . " Fan Club"; $tokens = 1000; break;
+		default: $prompt = "Generate a sensational and funny article from a fictitious publication about"; $title = "An article About You"; $tokens = 1000; break;
 			
 	}
 	

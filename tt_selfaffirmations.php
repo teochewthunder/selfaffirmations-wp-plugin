@@ -10,13 +10,14 @@
  */
 
 function wc_admin_menu() {
-	//this is a test for auth authentication.
-    add_submenu_page( 'index.php', 'Test Readytoreceive', 'Test Readytoreceive', 'manage_options', 'tt_get_readytoreceive', 'tt_get_readytoreceive' );
-	add_submenu_page( 'index.php', 'Test Generate Email', 'Test Generate Email', 'manage_options', 'tt_generate_mail', 'tt_generate_mail' );
-	add_submenu_page( 'index.php', 'Test Job', 'Test Job', 'manage_options', 'tt_selfaffirmations', 'tt_selfaffirmations' );
+    add_submenu_page("index.php", "Test Readytoreceive", "Test Readytoreceive", "manage_options", "tt_get_readytoreceive", "tt_get_readytoreceive");
+	add_submenu_page("index.php", "Test Terms", "Test Terms", "manage_options", "tt_get_terms", "tt_get_terms");
+	add_submenu_page("index.php", "Test Lastsent", "Test Lastsent", "manage_options", "tt_set_lastsent", "tt_set_lastsent");
+	add_submenu_page("index.php", "Test Generate Email", "Test Generate Email", "manage_options", "tt_generate_mail", "tt_generate_mail");
+	add_submenu_page("index.php", "Test Job", "Test Job", "manage_options", "tt_selfaffirmations", "tt_selfaffirmations");
 }
 
-add_action( 'admin_menu', 'wc_admin_menu', 11 );
+add_action("admin_menu", "wc_admin_menu", 11);
 
 function tt_get_readytoreceive() {
 	$cURLConnection = curl_init();
@@ -27,13 +28,15 @@ function tt_get_readytoreceive() {
 	$json_list = curl_exec($cURLConnection);
 	curl_close($cURLConnection);
 
+	echo $json_list;
+	
 	$list = json_decode($json_list);
-	print_r($list->items);
 	
 	return $list->items;
 }
 
 function tt_get_terms($id) {
+	$id = ($id ? $id : "teochewthunder@gmail.com");
 	$cURLConnection = curl_init();
 
 	curl_setopt($cURLConnection, CURLOPT_URL, "https://apex.oracle.com/pls/apex/teochewthunder/mailinglist/terms/" . $id);
@@ -42,6 +45,8 @@ function tt_get_terms($id) {
 	$json_list = curl_exec($cURLConnection);
 	curl_close($cURLConnection);
 
+	echo $json_list;
+	
 	$list = json_decode($json_list);
 	
 	$interests = [];
@@ -55,6 +60,7 @@ function tt_get_terms($id) {
 }
 
 function tt_set_lastsent($id) {
+	$id = ($id ? $id : "teochewthunder@gmail.com");
 	$cURLConnection = curl_init();
 
 	curl_setopt($cURLConnection, CURLOPT_URL, "https://apex.oracle.com/pls/apex/teochewthunder/mailinglist/setreceived/" . $id);
@@ -66,7 +72,7 @@ function tt_set_lastsent($id) {
 	return;
 }
 
-function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender = "M", $dob = "01-01-1980") {
+function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = "01-01-1980") {
 	$terms = tt_get_terms($id);
 
 	$interests = "";
@@ -127,15 +133,15 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 		default: $prompt = "Generate a complimentary poem about"; $title = "A poem for you!"; $tokens = 3000; break;			
 	}
 	
-	$tokens+= (100 * count($terms["interests"]));
-	$tokens+= (100 * count($terms["descriptions"]));
+	$tokens += (100 * count($terms["interests"]));
+	$tokens += (100 * count($terms["descriptions"]));
 	
 	$final_prompt = $prompt . " " . $about . ". " . $interests . $descriptions;
 		
 	//api call
 	$key = "sk-xxx";
 	
-    $url = 'https://api.openai.com/v1/chat/completions';  
+    $url = "https://api.openai.com/v1/chat/completions";  
     
     $headers = array(
         "Authorization: Bearer {$key}",
@@ -165,9 +171,10 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 
 	$result = curl_exec($curl);
     if (curl_errno($curl)) {
-        echo 'Error:' . curl_error($curl);
+        echo "Error:" . curl_error($curl);
     } else {
         echo print_r($result);
+		echo $final_prompt;
     }
     
     curl_close($curl);	
@@ -185,6 +192,7 @@ function tt_generate_mail($id = "teochewthunder@gmail.com", $name = "x", $gender
 	$sanitized_content = str_replace("[Email Address]", "", $sanitized_content);
 	$sanitized_content = str_replace("[Website]", "", $sanitized_content);
 	$sanitized_content = str_replace("[Social Media Handles]", "", $sanitized_content);	
+	
 	return ["title" => $title, "body" => $sanitized_content];
 }
 
@@ -201,4 +209,4 @@ function tt_selfaffirmations() {
 	}
 }
 
-add_action( 'cron_selfaffirmations', 'tt_selfaffirmations' );
+add_action("cron_selfaffirmations", "tt_selfaffirmations");

@@ -9,7 +9,8 @@
  * License: GPL2
  */
 
-function wc_admin_menu() {
+function wc_admin_menu() 
+{
     add_submenu_page("index.php", "Test Readytoreceive", "Test Readytoreceive", "manage_options", "tt_get_readytoreceive", "tt_get_readytoreceive");
 	add_submenu_page("index.php", "Test Terms", "Test Terms", "manage_options", "tt_get_terms", "tt_get_terms");
 	add_submenu_page("index.php", "Test Lastsent", "Test Lastsent", "manage_options", "tt_set_lastsent", "tt_set_lastsent");
@@ -19,7 +20,8 @@ function wc_admin_menu() {
 
 add_action("admin_menu", "wc_admin_menu", 11);
 
-function tt_get_readytoreceive() {
+function tt_get_readytoreceive() 
+{
 	$cURLConnection = curl_init();
 
 	curl_setopt($cURLConnection, CURLOPT_URL, "https://apex.oracle.com/pls/apex/teochewthunder/mailinglist/readytoreceive");
@@ -35,7 +37,8 @@ function tt_get_readytoreceive() {
 	return $list->items;
 }
 
-function tt_get_terms($id) {
+function tt_get_terms($id) 
+{
 	$id = ($id ? $id : "teochewthunder@gmail.com");
 	$cURLConnection = curl_init();
 
@@ -59,7 +62,8 @@ function tt_get_terms($id) {
 	return ["interests" => $interests, "descriptions" => $descriptions];
 }
 
-function tt_set_lastsent($id) {
+function tt_set_lastsent($id) 
+{
 	$id = ($id ? $id : "teochewthunder@gmail.com");
 	$cURLConnection = curl_init();
 
@@ -72,30 +76,41 @@ function tt_set_lastsent($id) {
 	return;
 }
 
-function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = "01-01-1980") {
+function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = "01-01-1980") 
+{
 	$terms = tt_get_terms($id);
 
 	$interests = "";
-	if (count($terms["interests"]) > 0) {
+	if (count($terms["interests"]) > 0) 
+	{
 		$interests = ($gender == "M" ? "He" : "She") . " is interested in ";
-		for ($i = 0; $i < sizeof($terms["interests"]); $i++) {
+		for ($i = 0; $i < sizeof($terms["interests"]); $i++) 
+		{
 			$interests .= $terms["interests"][$i];
-			if ($i == sizeof($terms["interests"]) - 1) {
+			if ($i == sizeof($terms["interests"]) - 1) 
+			{
 				$interests .= ". ";
-			} else {
+			} 
+			else 
+			{
 				$interests .= " and ";
 			}
 		}		
 	}
 
 	$descriptions = "";
-	if (count($terms["descriptions"]) > 0) {
+	if (count($terms["descriptions"]) > 0) 
+	{
 		$descriptions = ($gender == "M" ? "He" : "She") . " is described as ";		
-		for ($i = 0; $i < sizeof($terms["descriptions"]); $i++) {
+		for ($i = 0; $i < sizeof($terms["descriptions"]); $i++) 
+		{
 			$descriptions .= $terms["descriptions"][$i];
-			if ($i == sizeof($terms["descriptions"]) - 1) {
+			if ($i == sizeof($terms["descriptions"]) - 1) 
+			{
 				$descriptions .= ". ";
-			} else {
+			} 
+			else 
+			{
 				$descriptions .= " and ";
 			}
 		}		
@@ -110,7 +125,8 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	$tokens = 50;
 	$title = "";
 	
-	switch($prompt_type){
+	switch($prompt_type)
+	{
 		case 0: $prompt = "Generate a complimentary poem about"; $title = "A poem for you!"; $tokens = 3000; break;
 		case 1: $prompt = "Generate some positive life advice for"; $title = "Some life advice"; $tokens = 1000; break;
 		case 2: $prompt = "Generate a sample horoscope for"; $title = "Your Zodiac advice"; $tokens = 3000; break;
@@ -170,9 +186,12 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
 	$result = curl_exec($curl);
-    if (curl_errno($curl)) {
+    if (curl_errno($curl)) 
+	{
         echo "Error:" . curl_error($curl);
-    } else {
+    } 
+	else 
+	{
         echo print_r($result);
 		echo $final_prompt;
     }
@@ -196,14 +215,17 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	return ["title" => $title, "body" => $sanitized_content];
 }
 
-function tt_selfaffirmations() {
+function tt_selfaffirmations() 
+{
 	$list = tt_get_readytoreceive();
 
-	foreach($list as $l) {
+	foreach($list as $l) 
+	{
 		$name = $l->first_name . " " . $l->last_name;
 		$email = tt_generate_mail($l->email, $name, $l->gender, $l->dob);
 
-		if (wp_mail($l->email, $email["title"], $email["body"] . "\n\nTo unsubscribe to the Self-affirmations Mailing List, please reply to this email with the subject 'UNSUBSCRIBE'.", "", [] )) {
+		if (wp_mail($l->email, $email["title"], $email["body"] . "\n\nTo unsubscribe to the Self-affirmations Mailing List, please reply to this email with the subject 'UNSUBSCRIBE'.", "", [] )) 
+		{
 			tt_set_lastsent($l->email);
 		}
 	}

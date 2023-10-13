@@ -154,16 +154,15 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	
 	$final_prompt = $prompt . " " . $about . ". " . $interests . $descriptions;
 		
-	//api call
 	$key = "sk-xxx";
+	$org = "org-FUOhDblZb1pxvaY6YylF54gl";
+	$url = "https://api.openai.com/v1/chat/completions";
 	
-    $url = "https://api.openai.com/v1/chat/completions";  
-    
-    $headers = array(
-        "Authorization: Bearer {$key}",
-        "OpenAI-Organization: org-FUOhDblZb1pxvaY6YylF54gl", 
-        "Content-Type: application/json"
-    );
+	$headers = array(
+		"Authorization: Bearer " . $key,
+		"OpenAI-Organization: " . $org, 
+		"Content-Type: application/json"
+	);
     
     // Define messages
     $messages = [];

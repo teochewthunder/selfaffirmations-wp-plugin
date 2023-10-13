@@ -158,7 +158,7 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	$org = "org-FUOhDblZb1pxvaY6YylF54gl";
 	$url = "https://api.openai.com/v1/chat/completions";
 	
-	$headers = ]
+	$headers = [
 		"Authorization: Bearer " . $key,
 		"OpenAI-Organization: " . $org, 
 		"Content-Type: application/json"

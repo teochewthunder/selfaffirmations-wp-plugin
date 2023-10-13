@@ -158,11 +158,11 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	$org = "org-FUOhDblZb1pxvaY6YylF54gl";
 	$url = "https://api.openai.com/v1/chat/completions";
 	
-	$headers = array(
+	$headers = ]
 		"Authorization: Bearer " . $key,
 		"OpenAI-Organization: " . $org, 
 		"Content-Type: application/json"
-	);
+	];
     
     // Define messages
     $messages = [];
@@ -172,7 +172,7 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	$messages[] = $obj;
     	
     // Define data
-    $data = array();
+    $data = [];
     $data["model"] = "gpt-3.5-turbo";
     $data["messages"] = $messages;
     $data["max_tokens"] = $tokens;

@@ -192,7 +192,6 @@ function tt_generate_mail($id, $name = "Teochew Thunder", $gender = "M", $dob = 
 	else 
 	{
         echo print_r($result);
-		echo $final_prompt;
     }
     
     curl_close($curl);	

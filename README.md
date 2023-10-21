@@ -27,5 +27,10 @@ These are endpoints built on the Oracle APEX project for Oracle APEX [Self-affir
 - `tt_selfaffirmations()` runs `tt_get_readytoreceive()`, then runs `tt_generate_email()` on each item in the returned list. It then sends the email and runs `tt_set_lastsent()`.
   
 ## Emailing
+- Use `WP SMTP Mailer` plugin.
+- Use `Google API` with gmail account for authentication.
 
 ## CRON job
+- Use `WP Crontrol` plugin.
+- Create new job hook "cron_selfaffirmations".
+- In the plugin, use `add_action()` to connect the `tt_selfaffirmations()` function to the `cron_selfaffirmations` hook.
